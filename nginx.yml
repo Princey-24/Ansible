@@ -1,0 +1,20 @@
+---
+- name: Configure Nginx
+  hosts: local
+  connection: local
+  become: yes
+
+  tasks:
+    - name: Create custom index page
+      copy:
+       content: |
+        Hello from Ansible!
+        This server is managed by ansible.
+       dest: /var/www/html/index.html
+      notify: Restart nginx
+
+  handlers:
+   - name: Restart nginx
+     service:
+      name: nginx
+      state: restarted

@@ -1,0 +1,16 @@
+---
+- name: Template demonstration
+  hosts: localhost
+  connection: local
+  become: yes
+
+  vars:
+    server_name: "Ansible-EC2"
+    server_port: 8080
+    server_environment: "Production"
+
+  tasks:
+    - name: Create configuration using template
+      ansible.builtin.template:
+        src: server.conf.j2
+        dest: /tmp/server.conf

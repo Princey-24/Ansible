@@ -1,0 +1,20 @@
+---
+- name: Ansible Variables and Loops
+  hosts: local
+  connection: local
+  become: yes
+
+  vars:
+    packages:
+     - git
+     - curl
+     - tree
+
+  tasks:
+    - name: Install required packages
+      apt:
+       name: "{{item}}"
+       state: present
+       update_cache: yes
+      loop: "{{packages}}"
+

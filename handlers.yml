@@ -1,0 +1,27 @@
+---
+- name: Handler demonstration
+  hosts: localhost
+  connection: local
+  become: yes
+
+  tasks:
+    - name: Install Apache
+      ansible.builtin.apt:
+        name: apache2
+        state: present
+        update_cache: yes
+
+    - name: Update Apache configuration
+      ansible.builtin.copy:
+        content: |
+          ServerName localhost
+        dest: /etc/apache2/conf-available/servername.conf
+      notify: Restart Apache
+
+  handlers:
+    - name: Restart Apache
+      ansible.builtin.service:
+        name: apache2
+        state: restarted
+
+
